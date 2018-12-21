@@ -1,0 +1,109 @@
+<h4>Formularios <small>template</small></h4>
+<hr>
+<form (ngSubmit)="guardar(forma)" #forma="ngForm" novalidate="">
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Nombre" name="nombre" [(ngModel)]="usuario.nombre"
+          minlength="4" required #nombre="ngModel">
+        <div *ngIf="nombre.errors?.required">
+          <small class="text-muted">Este campo es requerido.</small>
+        </div>
+        <div *ngIf="nombre.errors?.minlength">
+          <small class="text-danger"><i class="fas fa-exclamation-circle"></i> Por lo menos {{
+            nombre.errors.minlength.requiredLength }} caracteres.</small>
+        </div>
+        <div *ngIf="nombre.invalid == false">
+          <small class="text-success"><i class="fas fa-check"></i> Correcto</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+        <input class="form-control" type="text" placeholder="Apellido" name="apellido" [(ngModel)]="usuario.apellido"
+          minlength="4" required #apellido="ngModel">
+        <div *ngIf="apellido.errors?.required">
+          <small class="text-muted">Este campo es requerido.</small>
+        </div>
+        <div *ngIf="apellido.errors?.minlength">
+          <small class="text-danger"><i class="fas fa-exclamation-circle"></i> Por lo menos {{
+            apellido.errors.minlength.requiredLength }} caracteres.</small>
+        </div>
+        <div *ngIf="apellido.invalid == false">
+          <small class="text-success"><i class="fas fa-check"></i> Correcto</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+
+      <input class="form-control" type="email" placeholder="Correo electrónico" name="correo" [(ngModel)]="usuario.correo"
+        required #correo="ngModel" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$">
+      <div *ngIf="correo.errors?.required">
+        <small class="text-muted">Este campo es requerido.</small>
+      </div>
+      <div *ngIf="correo.errors?.pattern">
+        <small class="text-muted">Debe cumplir con los parametros de ejemplo: <span class="text-success">{{
+            usuario.ejemplo }}</span></small>
+      </div>
+      <div *ngIf="correo.invalid == false">
+        <small class="text-success"><i class="fas fa-check"></i> Correcto</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">País</label>
+    <div class="col-md-8">
+      <select class="form-control" [(ngModel)]="usuario.pais" name="pais">
+        <option value="">Seleccionar país</option>
+        <option *ngFor="let pais of paises" [value]="pais.alpha3Code">{{ pais.nativeName }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Sexo</label>
+    <div class="col-md-8">
+      <div class="custom-control custom-radio" *ngFor="let sexo of sexos; let i = index">
+        <input [(ngModel)]="usuario.sexo" [id]="sexo" type="radio" name="sexo" class="custom-control-input" [value]="sexo">
+        <label class="custom-control-label" [for]="sexo">{{ sexo }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Aceptar</label>
+    <div class="col-md-8">
+      <div class="custom-control custom-checkbox">
+        <input [(ngModel)]="usuario.acepta" name="acepta" type="checkbox" class="custom-control-input" id="customCheck1"
+          required>
+        <label class="custom-control-label" for="customCheck1">Aceptar condiciones</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button [disabled]="!forma.valid" type="submit" class="btn btn-primary">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+</form>
+
+
+<pre>
+  {{ usuario | json }}
+</pre>
